@@ -8,6 +8,6 @@ def generate_trip() -> Generator[str, str, str]:
     yield "покинули университет"
 
 route = generate_trip()
-
+print("test")
 for i in range(3):
     print(next(route))
