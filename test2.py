@@ -190,20 +190,15 @@ class OpcuaServer:
         self.ai1 = self.device.add_variable(self.idx, OPC_NODE_NAME, 0.0)
         self.ai1.set_writable()
         self.node_id = self.ai1.nodeid.to_string()
-
     def start(self):
         self.server.start()
         print(f"OPC UA сервер запущен на {OPC_SERVER_URL}")
         print(f"NodeID переменной AI1: {self.node_id}")
-
     def update_value(self, value):
         self.ai1.set_value(value)
-
     def stop(self):
         self.server.stop()
         print("OPC UA сервер остановлен")
-
-
 def setup_postgres():
     """Создает таблицу в PostgreSQL если ее нет"""
     conn = psycopg2.connect(**PG_CONFIG)
@@ -223,8 +218,6 @@ def setup_postgres():
         print(f"Ошибка при создании таблицы: {e}")
     finally:
         conn.close()
-
-
 def save_to_postgres(value):
     """Сохраняет значение в базу данных"""
     conn = psycopg2.connect(**PG_CONFIG)
@@ -239,8 +232,6 @@ def save_to_postgres(value):
         print(f"Ошибка записи в PostgreSQL: {e}")
     finally:
         conn.close()
-
-
 def opcua_client_worker(server):
     """Клиент, который читает данные с сервера и сохраняет в БД"""
     client = Client(OPC_SERVER_URL)
@@ -263,8 +254,6 @@ def opcua_client_worker(server):
         print(f"Ошибка OPC UA клиента: {e}")
     finally:
         client.disconnect()
-
-
 def read_modbus_value():
     """Чтение значения из устройства по Modbus TCP"""
     try:
@@ -306,23 +295,18 @@ def simulate_device(server):
 
         time.sleep(1)  # Интервал опроса устройства
 
-
 if __name__ == "__main__":
     # Инициализация PostgreSQL
     setup_postgres()
-
     # Запуск OPC UA сервера
     server = OpcuaServer()
     server.start()
-
     # Запуск Modbus клиента
     device_thread = Thread(target=simulate_device, args=(server,))
     device_thread.daemon = True
     device_thread.start()
-
     # Даем серверу время на инициализацию
     time.sleep(2)
-
     # Запуск OPC UA клиента
     client_thread = Thread(target=opcua_client_worker, args=(server,))
     client_thread.daemon = True
