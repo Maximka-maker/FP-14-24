@@ -7,9 +7,9 @@ def read_modbus_value():
     """Чтение значения из устройства по Modbus TCP"""
     try:
         with ModbusTcpClient(main.MODBUS_IP, port=main.MODBUS_PORT) as client:
-            # Чтение holding register (функция 3)
+            # Чтение регистров
             response = client.read_holding_registers(
-                address=main.MODBUS_ADDRESS,  # Обычно адресация начинается с 0
+                address=main.MODBUS_ADDRESS,
                 count=2,
                 slave=main.MODBUS_UNIT
             )
