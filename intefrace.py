@@ -74,7 +74,7 @@ class PlotWidget(QWidget):
         self.setLayout(layout)
 
 
-def update_plot(self):
+    def update_plot(self):
         try:
             data = PG.load_data()
             if not data:
