@@ -11,24 +11,19 @@ import configparser
 config = configparser.ConfigParser()
 config.read('setup.ini')
 print(config)
-# Получение значений
-# opc_url = config['OPC_UA']['SERVER_URL']
-# modbus_ip = config['MODBUS']['IP']
-# pg_host = config['POSTGRESQL']['HOST']
-#
-# print(f"OPC URL: {opc_url}")
-# print(f"Modbus IP: {modbus_ip}")
-# print(f"PostgreSQL Host: {pg_host}")
 # Конфигурация
+
 OPC_SERVER_PORT = config['OPC_UA']['SERVER_PORT']
 OPC_SERVER_URL = f"opc.tcp://localhost:{OPC_SERVER_PORT}"
 OPC_NODE_NAME = "MV210-101.AI1"
 # Настройки Modbus
+
 MODBUS_IP = config['MODBUS']['IP']
 MODBUS_PORT = int(config['MODBUS']['PORT'])
 MODBUS_ADDRESS = int(config['MODBUS']['ADDRESS'])
 MODBUS_UNIT = int(config['MODBUS']['UNIT'])
 # Настройки PostgreSQL
+
 PG_CONFIG = {
     "host": config['POSTGRESQL']['HOST'],
     "database": config['POSTGRESQL']['DATABASE'],
