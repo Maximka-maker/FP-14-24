@@ -9,17 +9,17 @@ from PyQt5.QtWidgets import QApplication
 import configparser
 # Получение значений
 config = configparser.ConfigParser()
-config.read('setting.conf')
-
+config.read('setup.conf')
+print(config)
 # Получение значений
 opc_url = config['OPC_UA']['SERVER_URL']
 modbus_ip = config['MODBUS']['IP']
 pg_host = config['POSTGRESQL']['HOST']
 
-print(f"OPC URL: {opc_url}")
-print(f"Modbus IP: {modbus_ip}")
-print(f"PostgreSQL Host: {pg_host}")
-# Конфигурация
+# print(f"OPC URL: {opc_url}")
+# print(f"Modbus IP: {modbus_ip}")
+# print(f"PostgreSQL Host: {pg_host}")
+# # Конфигурация
 # OPC_SERVER_PORT = config['OPC_UA']['SERVER_PORT ']
 # OPC_SERVER_URL = f"opc.tcp://localhost:{OPC_SERVER_PORT}"
 # OPC_NODE_NAME = "MV210-101.AI1"
