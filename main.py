@@ -6,24 +6,23 @@ import time
 from threading import Thread
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton
-
-if __name__ == "__main__":
-    # Конфигурация
-    OPC_SERVER_PORT = 4840
-    OPC_SERVER_URL = f"opc.tcp://localhost:{OPC_SERVER_PORT}"
-    OPC_NODE_NAME = "MV210-101.AI1"
-    # Настройки Modbus
-    MODBUS_IP = "10.2.158.179"
-    MODBUS_PORT = 502  # Стандартный порт Modbus TCP
-    MODBUS_ADDRESS = 4000  # Адрес регистра
-    MODBUS_UNIT = 1  # Идентификатор устройства
-    # Настройки PostgreSQL
-    PG_CONFIG = {
-        "host": "localhost",
-        "database": "postgres",
-        "user": "postgres",
-        "password": "12345"
+# Конфигурация
+OPC_SERVER_PORT = 4840
+OPC_SERVER_URL = f"opc.tcp://localhost:{OPC_SERVER_PORT}"
+OPC_NODE_NAME = "MV210-101.AI1"
+# Настройки Modbus
+MODBUS_IP = "10.2.158.179"
+MODBUS_PORT = 502  # Стандартный порт Modbus TCP
+MODBUS_ADDRESS = 4000  # Адрес регистра
+MODBUS_UNIT = 1  # Идентификатор устройства
+# Настройки PostgreSQL
+PG_CONFIG = {
+    "host": "localhost",
+    "database": "postgres",
+    "user": "postgres",
+    "password": "12345"
     }
+if __name__ == "__main__":
     # Инициализация PostgreSQL
     PG.setup_postgres()
     # Запуск OPC UA сервера

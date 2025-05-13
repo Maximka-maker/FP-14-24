@@ -1,10 +1,11 @@
 from datetime import datetime
 import psycopg2
+import main
 
 
 def setup_postgres():
     # Создает таблицу в PostgreSQL если ее нет
-    conn = psycopg2.connect(**PG_CONFIG)
+    conn = psycopg2.connect(**main.PG_CONFIG)
     try:
         with conn.cursor() as cur:
             cur.execute("""
@@ -24,12 +25,12 @@ def setup_postgres():
 
 def save_to_postgres(value):
     # Сохраняет значение в базу данных
-    conn = psycopg2.connect(**PG_CONFIG)
+    conn = psycopg2.connect(**main.PG_CONFIG)
     try:
         with conn.cursor() as cur:
             cur.execute(
                 "INSERT INTO test (timestamp, value, tag_name, source) VALUES (%s, %s, %s, %s)",
-                (datetime.now(), value, OPC_NODE_NAME, "modbus")
+                (datetime.now(), value, main.OPC_NODE_NAME, "modbus")
             )
             conn.commit()
     except Exception as e:

@@ -1,16 +1,17 @@
 import time
 from pymodbus.client import ModbusTcpClient
 import struct
+import main
 
 def read_modbus_value():
     """Чтение значения из устройства по Modbus TCP"""
     try:
-        with ModbusTcpClient(MODBUS_IP, port=MODBUS_PORT) as client:
+        with ModbusTcpClient(main.MODBUS_IP, port=main.MODBUS_PORT) as client:
             # Чтение holding register (функция 3)
             response = client.read_holding_registers(
-                address=MODBUS_ADDRESS,  # Обычно адресация начинается с 0
+                address=main.MODBUS_ADDRESS,  # Обычно адресация начинается с 0
                 count=2,
-                slave=MODBUS_UNIT
+                slave=main.MODBUS_UNIT
             )
             # print(response)
             if response.isError():
