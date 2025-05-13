@@ -6,6 +6,7 @@ import time
 from threading import Thread
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton
+
 # Конфигурация
 OPC_SERVER_PORT = 4840
 OPC_SERVER_URL = f"opc.tcp://localhost:{OPC_SERVER_PORT}"
@@ -42,6 +43,7 @@ if __name__ == "__main__":
     main_window = intefrace.MainWindow()
     main_window.show()
     sys.exit(app.exec_())
+
     try:
         while True:
             time.sleep(1)
