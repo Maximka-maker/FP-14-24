@@ -43,5 +43,3 @@ def opcua_client_worker(server):
         print(f"Ошибка OPC UA клиента: {e}")
     finally:
         client.disconnect()
-
-

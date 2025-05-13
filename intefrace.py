@@ -1,29 +1,22 @@
-
 import psycopg2
-
 from matplotlib.figure import Figure
-
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-
-
+import PG
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("График термопары")
         self.setGeometry(100, 100, 800, 600)
-
         # Создаем главный виджет и layout
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         main_layout = QVBoxLayout(central_widget)
-
         # Создаем панель управления
         control_panel = QWidget()
         control_layout = QHBoxLayout(control_panel)
-
         # Кнопки управления
         self.start_button = QPushButton("Старт автообновления")
         self.stop_button = QPushButton("Стоп автообновления")
@@ -46,13 +39,13 @@ class MainWindow(QMainWindow):
 
         # Настройка таймера для автообновления
         self.update_timer = QtCore.QTimer()
-        self.update_timer.timeout.connect(self.plot_widget.load_data)
+        self.update_timer.timeout.connect(self.plot_widget.update_plot)
 
         # Интервал обновления в миллисекундах
         self.update_interval = 1000
 
         # Загружаем данные при старте
-        self.plot_widget.load_data()
+        self.plot_widget.update_plot()
 
     def start_auto_update(self):
         """Запуск автоматического обновления"""
@@ -66,7 +59,7 @@ class MainWindow(QMainWindow):
 
     def manual_update(self):
         """Ручное обновление данных"""
-        self.plot_widget.load_data()
+        self.plot_widget.update_plot()
         self.statusBar().showMessage("Данные обновлены вручную")
 class PlotWidget(QWidget):
     def __init__(self, parent=None):
@@ -76,23 +69,9 @@ class PlotWidget(QWidget):
         layout = QVBoxLayout()
         layout.addWidget(self.canvas)
         self.setLayout(layout)
-    def load_data(self):
+    def update_plot(self):
         try:
-            # Подключаемся к PostgreSQL
-            conn = psycopg2.connect(
-                dbname="postgres",
-                user="postgres",
-                password="12345",
-                host="localhost",
-                port="5432"
-            )
-            cursor = conn.cursor()
-            # Получаем данные из таблицы test
-            cursor.execute("SELECT timestamp, value FROM test ORDER BY timestamp")
-            data = cursor.fetchall()
-            # Закрываем соединение
-            cursor.close()
-            conn.close()
+            data = PG.load_data()
             if not data:
                 print("Нет данных в таблице test")
                 return

@@ -2,7 +2,6 @@ from datetime import datetime
 import psycopg2
 import main
 
-
 def setup_postgres():
     # Создает таблицу в PostgreSQL если ее нет
     conn = psycopg2.connect(**main.PG_CONFIG)
@@ -37,3 +36,15 @@ def save_to_postgres(value):
         print(f"Ошибка записи в PostgreSQL: {e}")
     finally:
         conn.close()
+
+def load_data():
+    # Подключаемся к PostgreSQL
+    conn = psycopg2.connect(**main.PG_CONFIG)
+    cursor = conn.cursor()
+    # Получаем данные из таблицы test
+    cursor.execute("SELECT timestamp, value FROM test ORDER BY timestamp")
+    data = cursor.fetchall()
+    # Закрываем соединение
+    cursor.close()
+    conn.close()
+    return data
