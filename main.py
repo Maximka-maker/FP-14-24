@@ -7,6 +7,7 @@ from threading import Thread
 import sys
 from PyQt5.QtWidgets import QApplication
 import configparser
+
 # Получение значений
 config = configparser.ConfigParser()
 config.read('setup.ini')
@@ -31,10 +32,10 @@ PG_CONFIG = {
     "password": config['POSTGRESQL']['PASSWORD']
     }
 
-print(MODBUS_IP,type(MODBUS_IP))
-print(MODBUS_PORT,type(MODBUS_PORT))
-print(MODBUS_ADDRESS,type(MODBUS_ADDRESS))
-print(MODBUS_UNIT,type(MODBUS_UNIT))
+print(MODBUS_IP, type(MODBUS_IP))
+print(MODBUS_PORT, type(MODBUS_PORT))
+print(MODBUS_ADDRESS, type(MODBUS_ADDRESS))
+print(MODBUS_UNIT, type(MODBUS_UNIT))
 
 if __name__ == "__main__":
     # Инициализация PostgreSQL

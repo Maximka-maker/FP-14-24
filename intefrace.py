@@ -1,9 +1,10 @@
-import psycopg2
 from matplotlib.figure import Figure
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import PG
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -61,6 +62,8 @@ class MainWindow(QMainWindow):
         """Ручное обновление данных"""
         self.plot_widget.update_plot()
         self.statusBar().showMessage("Данные обновлены вручную")
+
+
 class PlotWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -69,7 +72,9 @@ class PlotWidget(QWidget):
         layout = QVBoxLayout()
         layout.addWidget(self.canvas)
         self.setLayout(layout)
-    def update_plot(self):
+
+
+def update_plot(self):
         try:
             data = PG.load_data()
             if not data:

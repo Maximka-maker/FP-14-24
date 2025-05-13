@@ -3,6 +3,7 @@ from pymodbus.client import ModbusTcpClient
 import struct
 import main
 
+
 def read_modbus_value():
     """Чтение значения из устройства по Modbus TCP"""
     try:
@@ -23,6 +24,8 @@ def read_modbus_value():
     except Exception as e:
         print(f"Ошибка подключения Modbus: {e}")
         return None
+
+
 def simulate_device(server):
     # Чтение данных с реального устройства по Modbus
     while True:
