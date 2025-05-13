@@ -5,23 +5,27 @@ import PG
 import time
 from threading import Thread
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QPushButton
+from PyQt5.QtWidgets import QApplication
+import configparser
+# Получение значений
+config = configparser.ConfigParser()
+config.read('setting.conf')
 
 # Конфигурация
-OPC_SERVER_PORT = 4840
+OPC_SERVER_PORT = config['OPC_UA']['SERVER_URL']
 OPC_SERVER_URL = f"opc.tcp://localhost:{OPC_SERVER_PORT}"
 OPC_NODE_NAME = "MV210-101.AI1"
 # Настройки Modbus
-MODBUS_IP = "10.2.158.179"
-MODBUS_PORT = 502  # Стандартный порт Modbus TCP
-MODBUS_ADDRESS = 4000  # Адрес регистра
-MODBUS_UNIT = 1  # Идентификатор устройства
+MODBUS_IP = config['MODBUS']['IP']
+MODBUS_PORT = config['MODBUS']['PORT']
+MODBUS_ADDRESS = config['MODBUS']['ADDRESS']
+MODBUS_UNIT = config['MODBUS']['UNIT']
 # Настройки PostgreSQL
 PG_CONFIG = {
-    "host": "localhost",
-    "database": "postgres",
-    "user": "postgres",
-    "password": "12345"
+    "host": config['POSTGRESQL']['HOST'],
+    "database": config['POSTGRESQL']['DATABASE'],
+    "user": config['POSTGRESQL']['USER'],
+    "password": config['POSTGRESQL']['PASSWORD']
     }
 if __name__ == "__main__":
     # Инициализация PostgreSQL
