@@ -13,13 +13,11 @@ def read_modbus_value():
                 count=2,
                 slave=main.MODBUS_UNIT
             )
-            # print(response)
             if response.isError():
                 print(f"Ошибка Modbus: {response}")
                 return None
             raw_value = struct.pack('>HH', response.registers[1], response.registers[0])
             float_value = struct.unpack('>f', raw_value)[0]
-            print(round(float_value,2))
             return float_value
 
     except Exception as e:
@@ -32,7 +30,6 @@ def simulate_device(server):
             value = read_modbus_value()
             if value is not None:
                 server.update_value(value)
-                print(f"Получено значение по Modbus: {value:.2f}")
             else:
                 print("Не удалось получить значение по Modbus")
         except Exception as e:
